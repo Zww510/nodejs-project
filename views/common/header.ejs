@@ -1,0 +1,18 @@
+<header class="lv-header">
+  <div class="lv-header-left">
+    <a href="/" class="logo"><h1>骚猪 - 我的天，你真帅</h1></a>
+  </div>
+  <div class="lv-header-right">
+    <a href="/user/logout" class="btn"><i class="iconfont icon-setting"></i></a>
+    <div class="btn"><i class="iconfont icon-edit"></i></div>
+    <div class="user">
+      <img class="avator" src="./images/avator.png" alt="">
+      <% if (isAdmin) {%>
+        <span class="nickname"><%= nickName %> - 管理员</span>
+      <% } else {%>
+        <span class="nickname"><%= nickName %></span>
+      <% }%>
+      <i class="iconfont icon-down"></i>
+    </div>
+  </div>
+</header>

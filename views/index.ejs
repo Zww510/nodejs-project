@@ -11,35 +11,11 @@
 </head>
 <body>
 
-  <header class="lv-header">
-    <div class="lv-header-left">
-      <a href="/" class="logo"><h1>骚猪 - 我的天，你真帅</h1></a>
-    </div>
-    <div class="lv-header-right">
-      <div class="btn"><i class="iconfont icon-setting"></i></div>
-      <div class="btn"><i class="iconfont icon-edit"></i></div>
-      <div class="user">
-        <img class="avator" src="./images/avator.png" alt="">
-        <span class="nickname"><%= nickName %></span>
-        <i class="iconfont icon-down"></i>
-      </div>
-    </div>
-  </header>
+  <%- include('./common/header.ejs') %>
 
   <div class="lv-main">
 
-    <div class="lv-menu">
-      <ul>
-        <li class="lv-menu-item active">
-          <i class="iconfont icon-home"></i>
-          <span class="lv-menu-item__title">系统首页</span>
-        </li>
-        <li class="lv-menu-item">
-          <i class="iconfont icon-team"></i>
-          <span class="lv-menu-item__title">用户管理</span>
-        </li>
-      </ul>
-    </div>
+    <%- include('./common/menu.ejs') %>
 
     <div class="lv-body">
 
@@ -56,6 +32,15 @@
           </div>
         </div>
       </div>
+
+      <table>
+        <% for (var i = 0; i < userList.length; i++) { %>
+          <tr>
+            <td><%= userList[i].username %></td>
+            <td><%= userList[i].nickName %></td>
+          </tr>
+        <% } %>
+      </table>
 
       <!-- 分页 -->
       <div class="lv-pagination right">

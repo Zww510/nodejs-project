@@ -53,12 +53,10 @@ router.post('/login', (req, res) => {
       // 用户存在，判断密码是否正确
       bcrypt.compare(password, data.password, (err, isOk) => {
         if (isOk) {
-          res.send({
-            code: 0,
-            msg: '登录成功'
-          })
-          // res.redirect('/index.html');
-          
+          // 跳转会首页之前，将用户的昵称与is_admin写入到session中
+          req.session.nickName = data.nickName;
+          req.session.isAdmin = data.is_admin;
+          res.redirect('/');
         } else {
           res.send({
             code: -2,
@@ -68,6 +66,13 @@ router.post('/login', (req, res) => {
       })
     }
   })
+})
+
+// 退出登录 http://localhost:3000/user/logout
+router.get('/logout', (req, res) => {
+  // 销毁当前的session
+  req.session.destroy();
+  res.redirect('/login.html');
 })
 
 module.exports = router;

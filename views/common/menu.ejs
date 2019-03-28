@@ -1,0 +1,14 @@
+<div class="lv-menu">
+  <ul>
+    <li class="lv-menu-item active">
+      <i class="iconfont icon-home"></i>
+      <span class="lv-menu-item__title">系统首页</span>
+    </li>
+    <% if (isAdmin) {%>
+      <li class="lv-menu-item">
+        <i class="iconfont icon-team"></i>
+        <span class="lv-menu-item__title">用户管理</span>
+      </li>
+    <% }%>
+  </ul>
+</div>
