@@ -11,6 +11,10 @@ const bannerRouter = require('./routes/bannerRouter');
 // 设置静态资源托管的文件夹
 app.use(express.static(path.resolve(__dirname, './public')));
 
+// 设置能够使用 req.body 的中间件
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 // 设置使用cookie中间件
 app.use(cookieParser());
 
