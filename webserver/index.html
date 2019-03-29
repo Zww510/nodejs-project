@@ -74,5 +74,42 @@
   </div>
 
   <script src="./js/less.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script>
+    $(function() {
+
+      // 0. 先从localStorage取出token
+      let token = localStorage.getItem('token');
+
+      if (!token) {
+        alert('用户未登录');
+        location.href = '/login.html';
+        return;
+      }
+
+      // 1. 请求当前用户的基本信息
+      $.ajax({
+        url: 'http://localhost:3000/api/getUserInfo',
+        method: 'GET',
+        headers: {
+          // 自定义请求头 
+          // X-Access-Token 的值从哪里来
+          'X-Access-Token': token
+        },
+        success: function(res) {
+          // console.log(res);
+          if (res.code === 0) {
+            // 
+            $('.avator').attr('src', res.userInfo.avator);
+            $('.nickname').html(res.userInfo.username);
+          } else {
+            alert(res.msg);
+          }
+        }
+      })
+
+    })
+  </script>
 </body>
 </html>
