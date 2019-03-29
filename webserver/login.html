@@ -35,5 +35,29 @@
   </div>
 
   <script src="./js/less.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script>
+    $(function() {
+      $('.lv-login-body__btn').click(function() {
+        $.ajax({
+          url: 'http://localhost:3000/api/user',
+          method: 'GET',
+          data: {
+            username: $('[name="username"]').val(),
+            password: $('[name="password"]').val()
+          },
+          success: function(res) {
+            if (res.code === 0) {
+              // 真正的登录成功 ,跳转到首页
+              location.href = '/index.html';
+            } else {
+              alert(res.msg);
+            }
+          }
+        })
+      })
+    })
+  </script>
 </body>
 </html>

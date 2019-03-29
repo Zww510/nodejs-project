@@ -40,5 +40,30 @@
   </div>
 
   <script src="./js/less.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+  <script>
+    $(function() {
+      $('.lv-register-body__btn').click(function() {
+
+        $.ajax({
+          url: 'http://localhost:3000/api/user',
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json'
+          },
+          data: JSON.stringify({
+            username: $('[name="username"]').val(),
+            password: $('[name="password"]').val()
+          }),
+          success: function(res) {
+            console.log(res);
+          }
+        })
+
+      })
+    })
+  </script>
 </body>
 </html>

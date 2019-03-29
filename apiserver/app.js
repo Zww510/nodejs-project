@@ -3,6 +3,7 @@ const app = express();
 
 const userRouter = require('./routes/userRouter');
 
+// 默认是只对 json 格式或者 普通表单格式
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
