@@ -127,7 +127,8 @@ router.post('/updateUserInfo', tokenVerify(), upload.single('eq'), (req, res) =>
   UserModel.updateOne({
     _id: userId
   }, {
-    avator: newFileName
+    avator: newFileName,
+    username: req.body.username
   }).then(data => {
     res.send({
       code: 0,
@@ -142,6 +143,7 @@ router.post('/updateUserInfo', tokenVerify(), upload.single('eq'), (req, res) =>
 // 验证 token
 
 function tokenVerify() {
+  // 返回的是验证token的中间件函数
   return (req, res, next) => {
     // 0. 获取前端在请求头中传递过来的 X-Access-Token 
     let token = req.get('X-Access-Token');

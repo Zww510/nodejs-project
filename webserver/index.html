@@ -79,14 +79,12 @@
 
     <div class="lv-dialog__body">
       <h2>用户信息</h2>
-      <form action="http://localhost:3000/api/updateUserInfo" method="POST" enctype="multipart/form-data">
-        <input type="text" id="username" name="username" value="张三" />
-        <input type="file" id="avator" name="eq" placeholder="请选择头像">
-        <img id="avator_img" src="./images/avator.png" alt="">
-  
-        <input type="submit" id="ok">修改</button>
-        <button id="cancel">取消</button>
-      </form>
+      <input type="text" id="username" name="username" value="张三" />
+      <input type="file" id="avator" name="eq" placeholder="请选择头像">
+      <img id="avator_img" src="./images/avator.png" alt="">
+
+      <button id="ok">修改</button>
+      <button id="cancel">取消</button>
     </div>
   </div>
 
@@ -107,6 +105,37 @@
       })
       $('#cancel').click(function() {
         $('#lv-dialog').hide();
+      })
+
+
+      // 修改用户信息（上传文件）
+      $('#ok').click(function() {
+        let token = localStorage.getItem('token');
+
+        var formData = new FormData();
+        // 主动添加要传给后台的参数
+        formData.append('username', $('#username').val());
+        formData.append('eq', $('#avator').get(0).files[0]);
+
+        $.ajax({
+          url: 'http://localhost:3000/api/updateUserInfo',
+          method: 'POST',
+          // 有文件的data 不能直接如下这样去写，需要使用 FormData
+          // data: {}
+
+          data: formData,
+          processData: false, // 上传文件，需要将这个选项设置为false
+          contentType: false, // 上传文件，需要将这个选项设置为false
+          headers: {
+            'X-Access-Token': token
+          },
+          success: function(res) {
+            if (res.code === 0) {
+              alert('上传成功');
+              location.reload();
+            }
+          }
+        })
       })
     })
 
@@ -133,13 +162,16 @@
         success: function(res) {
           // console.log(res);
           if (res.code === 0) {
-            // 
-            $('.avator').attr('src', res.userInfo.avator);
+            // res.userInfo.avator 存的是文件名
+            // http://localhost:3000/res.userInfo.avator
+            var imgSrc = 'http://localhost:3000/' + res.userInfo.avator;
+
+            $('.avator').attr('src', imgSrc);
             $('.nickname').html(res.userInfo.username);
 
             // 弹层中的内容
             $('#username').val(res.userInfo.username);
-            $('#avator_img').attr('src', res.userInfo.avator);
+            $('#avator_img').attr('src', imgSrc);
           } else {
             alert(res.msg);
           }
