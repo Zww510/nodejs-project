@@ -1,4 +1,6 @@
 const express = require('express');
+const path = require('path');
+const jwt = require('jsonwebtoken');
 const app = express();
 
 const userRouter = require('./routes/userRouter');
@@ -7,6 +9,8 @@ const userRouter = require('./routes/userRouter');
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
+app.use(express.static(path.resolve(__dirname, './public')));
+
 // 允许跨域
 app.use((req, res, next) => {
   res.set('Access-Control-Allow-Origin', '*');
@@ -14,6 +18,7 @@ app.use((req, res, next) => {
   res.set('Access-Control-Allow-Methods', 'get, post, put, patch, delete');
   next();
 })
+
 
 app.use('/api', userRouter);
 

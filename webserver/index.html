@@ -73,12 +73,45 @@
     </div>
   </div>
 
+
+  <div id="lv-dialog" class="lv-dialog">
+    <div class="lv-dialog__mark"></div>
+
+    <div class="lv-dialog__body">
+      <h2>用户信息</h2>
+      <form action="http://localhost:3000/api/updateUserInfo" method="POST" enctype="multipart/form-data">
+        <input type="text" id="username" name="username" value="张三" />
+        <input type="file" id="avator" name="eq" placeholder="请选择头像">
+        <img id="avator_img" src="./images/avator.png" alt="">
+  
+        <input type="submit" id="ok">修改</button>
+        <button id="cancel">取消</button>
+      </form>
+    </div>
+  </div>
+
   <script src="./js/less.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
   <script>
     $(function() {
+      getUserInfo();
 
+      $('.user').click(function () {
+        $('#lv-dialog').show();
+      })
+
+      
+      $('#lv-dialog .lv-dialog__mark').click(function() {
+        $('#lv-dialog').hide();
+      })
+      $('#cancel').click(function() {
+        $('#lv-dialog').hide();
+      })
+    })
+
+
+    function getUserInfo () {
       // 0. 先从localStorage取出token
       let token = localStorage.getItem('token');
 
@@ -103,13 +136,16 @@
             // 
             $('.avator').attr('src', res.userInfo.avator);
             $('.nickname').html(res.userInfo.username);
+
+            // 弹层中的内容
+            $('#username').val(res.userInfo.username);
+            $('#avator_img').attr('src', res.userInfo.avator);
           } else {
             alert(res.msg);
           }
         }
       })
-
-    })
+    }
   </script>
 </body>
 </html>
